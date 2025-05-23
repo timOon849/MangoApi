@@ -47,16 +47,16 @@ namespace UnityAPIarcanoid.Service
 
             await _context.User.AddAsync(_user);
             await _context.SaveChangesAsync();
-            BuySkins bs = new BuySkins();
-            bs.BallSkinId = 1;
-            bs.UserId = _user.Id;
-            await _context.BuySkins.AddAsync(bs);
-            await _context.SaveChangesAsync();
-            CurrentSkin cs = new CurrentSkin();
-            cs.UserId = _user.Id;
-            cs.BallSkinId = 1;
-            await _context.CurrentSkin.AddAsync(cs);
-            await _context.SaveChangesAsync();
+            //BuySkins bs = new BuySkins();
+            //bs.BallSkinId = 1;
+            //bs.UserId = _user.Id;
+            //await _context.BuySkins.AddAsync(bs);
+            //await _context.SaveChangesAsync();
+            //CurrentSkin cs = new CurrentSkin();
+            //cs.UserId = _user.Id;
+            //cs.BallSkinId = 1;
+            //await _context.CurrentSkin.AddAsync(cs);
+            //await _context.SaveChangesAsync();
             var token = GenerateJwtToken(_user);
             return new OkObjectResult(new { Token = token });
         }
