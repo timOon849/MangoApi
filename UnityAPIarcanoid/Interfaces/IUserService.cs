@@ -9,5 +9,6 @@ namespace UnityAPIarcanoid.Interfaces
         Task<IActionResult> Register([FromBody] UserData user);
         Task<IActionResult> Login([FromBody] UserData user);
 
+        Task<IActionResult> LeaderBoard();
     }
 }

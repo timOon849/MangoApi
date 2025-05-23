@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
+using UnityAPIarcanoid.DB;
 using UnityAPIarcanoid.Interfaces;
 using UnityAPIarcanoid.Model;
 using UnityAPIarcanoid.Requests;
@@ -11,9 +14,11 @@ namespace UnityAPIarcanoid.Controllers
     public class UserController : ControllerBase
     {
         private readonly IUserService _userService;
-        public UserController(IUserService userService)
+        private readonly ContextDB _context;
+        public UserController(IUserService userService, ContextDB context)
         {
             _userService = userService;
+            _context = context;
         }
 
         [HttpPost("register")]
@@ -29,5 +34,12 @@ namespace UnityAPIarcanoid.Controllers
             var result = await _userService.Login(user);
             return result;
         }
-    }
+
+        [HttpGet("leaderboard")]
+        public async Task<IActionResult> LeaderBoard()
+        {
+            var result = await _userService.LeaderBoard();
+            return result;
+        }
+    } 
 }

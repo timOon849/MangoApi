@@ -22,6 +22,28 @@ namespace UnityAPIarcanoid.Service
             _configuration = configuration;
         }
 
+        public async Task<IActionResult> LeaderBoard()
+        {
+            try
+            {
+                // Получаем всех пользователей и их количество монет
+                var users = await _context.User.Select(u => new { u.Username, u.Points }).ToListAsync();
+
+                if (users == null || !users.Any())
+                {
+                    return new NotFoundObjectResult("No users found.");
+                }
+
+                // Возвращаем список пользователей с их монетами
+                return new OkObjectResult(new { users });
+            }
+            catch (Exception ex)
+            {
+                Console.Error.WriteLine($"Error fetching all users' coins: {ex.Message}");
+                return new BadRequestObjectResult("Internal server error occurred while fetching users' coins.");
+            }
+        }
+
         public async Task<IActionResult> Login([FromBody] UserData user)
         {
             var existingUser = await _context.User.FirstOrDefaultAsync(u => u.Username == user.Username);
@@ -60,6 +82,12 @@ namespace UnityAPIarcanoid.Service
             var token = GenerateJwtToken(_user);
             return new OkObjectResult(new { Token = token });
         }
+
+        //public async Task<IActionResult> LeaderBoard()
+        //{
+            
+        //}
+
 
         private string GenerateJwtToken(User user)
         {
