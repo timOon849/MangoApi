@@ -13,6 +13,7 @@ namespace UnityAPIarcanoid.DB
         public DbSet<BallSkin> BallSkin { get; set; }
         public DbSet<BuySkins> BuySkins { get; set; }
         public DbSet<CurrentSkin> CurrentSkin { get; set; }
+        public DbSet<Messages> Messages { get; set; }
     }
     
 }

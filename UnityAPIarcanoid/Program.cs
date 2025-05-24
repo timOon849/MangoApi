@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using UnityAPIarcanoid.DB;
+using UnityAPIarcanoid.Hubs;
 using UnityAPIarcanoid.Interfaces;
 using UnityAPIarcanoid.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddSignalR();
 // Регистрация сервисов
 builder.Services.AddDbContext<ContextDB>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("CS")), ServiceLifetime.Scoped);
@@ -62,5 +64,5 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
-
+app.MapHub<ChatHub>("/chatHub");
 app.Run();
